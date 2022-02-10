@@ -4,6 +4,15 @@
     https://api.github.com/users/<your name>
 */
 
+import axios from "axios";
+axios.get('https://api.github.com/users/VWashingtonCoder')
+.then(resp =>{
+  console.log(resp.data);
+})
+.catch(err => {
+  console.error(err);
+});
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -33,7 +42,7 @@ const followersArray = [];
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
-
+    
     <div class="card">
       <img src={image url of user} />
       <div class="card-info">
