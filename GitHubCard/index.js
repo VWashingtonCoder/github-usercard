@@ -48,8 +48,20 @@ axios.get('https://api.github.com/users/VWashingtonCoder')
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ["jeremylong", "stevejgordon", "antfu", "patrick-kidger", "Neo23x0"];
 
+followersArray.forEach(elem => {
+  axios.get(`https://api.github.com/users/${elem}`)
+    .then(resp =>{
+      let apiObj = resp.data;
+      const profileCard = cardMaker(apiObj);
+      document.querySelector(".cards").appendChild(profileCard);
+    })
+    .catch(err => {
+      console.error(err);
+      alert(`Sorry. Site is Down Momentarily`)
+    });
+})
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -112,12 +124,6 @@ function cardMaker(apiObj){
   //always return
   return card;
 }
-
-
-
-
-
-
 
 /*
   List of LS Instructors Github username's:
