@@ -3,15 +3,15 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
 import axios from "axios";
-axios.get('https://api.github.com/users/VWashingtonCoder')
-.then(resp =>{
-  console.log(resp.data);
-})
-.catch(err => {
-  console.error(err);
-});
+
+// axios.get('https://api.github.com/users/VWashingtonCoder')
+// .then(resp =>{
+//   console.log(resp.data)
+// })
+// .catch(err => {
+//   console.error(err);
+// });
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -25,6 +25,17 @@ axios.get('https://api.github.com/users/VWashingtonCoder')
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+
+axios.get('https://api.github.com/users/VWashingtonCoder')
+.then(resp =>{
+  let apiObj = resp.data;
+  const profileCard = cardMaker(apiObj);
+  document.querySelector(".cards").appendChild(profileCard);
+})
+.catch(err => {
+  console.error(err);
+  alert(`Sorry. Site is down`);
+});
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -42,7 +53,7 @@ const followersArray = [];
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
-    
+
     <div class="card">
       <img src={image url of user} />
       <div class="card-info">
@@ -58,6 +69,55 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function cardMaker(apiObj){
+  //Institate elements
+  const card = document.createElement("div");
+  const image = document.createElement("img");
+  const cardInfo = document.createElement("div");
+  const name = document.createElement("h3");
+  const username = document.createElement("p");
+  const location = document.createElement("p");
+  const profile = document.createElement("p");
+  const urlAddress = document.createElement("a");
+  const followers = document.createElement("p");
+  const following = document.createElement("p");
+  const bio = document.createElement("p");
+  // form element structure
+  card.appendChild(image);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(urlAddress);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+  //add className & textContent
+  card.classList.add("card");
+  cardInfo.classList.add("card-info");
+  name.classList.add("name");
+  username.classList.add("username");
+  image.src = apiObj.avatar_url;
+  name.textContent = apiObj.name;
+  username.textContent = apiObj.login;
+  location.textContent = `Location: ${apiObj.location}`;
+  profile.textContent = `Profile:`;
+  urlAddress.href = apiObj.html_url;
+  urlAddress.textContent = apiObj.html_url;
+  followers.textContent = `Followers: ${apiObj.followers}`;
+  following.textContent = `Following: ${apiObj.following}`;
+  bio.textContent = `Bio: ${apiObj.bio}`
+  //always return
+  return card;
+}
+
+
+
+
+
+
 
 /*
   List of LS Instructors Github username's:
